@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
 
 # Create your views here.
 def register_page(request):
@@ -56,10 +58,9 @@ def logout_page(request):
     logout(request)
     return redirect('/login/')
 
+
 @login_required(login_url="/login/")
 def add_codeSnippet(request):
-    print("Inside add_codeSnippet view")
-
     if request.method == "POST":
         title = request.POST.get('title')
         code_content = request.POST.get('code_content')
@@ -69,5 +70,34 @@ def add_codeSnippet(request):
         Code.objects.create(title=title, code_content=code_content, language=language, tags=tags, user=request.user)
         return redirect('/add_codeSnippet/')
 
-    return render(request, "index.html")
+    queryset = Code.objects.all()
+    context = {'CodeContent': queryset}
+    return render(request, "index.html", context)
 
+
+@login_required(login_url="/login/")
+def delete_codeSnippet(request, id):
+    obj = Code.objects.get(id=id)
+    obj.delete()
+    print("Code deleted")  
+    return redirect(reverse('add_codeSnippet'))  
+
+@login_required(login_url="/login/")
+def update_codeSnippet(request,id):
+    queryset=Code.objects.get(id=id)
+    if request.method == "POST":
+        title = request.POST.get('title')
+        code_content = request.POST.get('code_content')
+        language = request.POST.get('language')
+        tags = request.POST.get('tags')
+
+        queryset.title=title
+        queryset.code_content=code
+        queryset.language=language
+        queryset.tags=tags
+
+        queryset.save()
+        return redirect('/add_codeSnippet/')
+    
+    context={'CodeContent':queryset }
+    return render(request,"updateRecipe.html",context)
