@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content%}
+{% load static %}  
+  <link rel="stylesheet" href="{% static 'css/index.css' %}">
+
 <div class="container mt-5">
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
@@ -10,21 +13,21 @@
     </div>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="https://source.unsplash.com/random/520x300/?developer,coding" class="d-block w-100" alt="...">
+        <img src="https://source.unsplash.com/random/520x200/?developer,coding" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h2>"Every great developer you know got there by solving problems they were unqualified to solve until they actually did it.",        </h2>
           <p>"Coding: Where creativity meets logic."        </p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/random/520x300/?web_development,hacking" class="d-block w-100" alt="...">
+        <img src="https://source.unsplash.com/random/520x200/?web_development,hacking" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h2>    "Why do programmers prefer dark mode? Because light attracts bugs.",        </h2>
           <p>"Explore the art of programming."        </p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="https://source.unsplash.com/random/520x300/?DSA,html,javascript" class="d-block w-100" alt="...">
+        <img src="https://source.unsplash.com/random/520x200/?DSA,html,javascript" class="d-block w-100" alt="...">
         <div class="carousel-caption d-none d-md-block">
           <h2>    "The best error message is the one that never shows up.",        </h2>
           <p>"Revolutionize your development journey."            .</p>
@@ -49,14 +52,14 @@
     </form>
 </div>
 
-<div class="mt-5">
+<div class="mt-5 ">
     {% if CodeContent %}
-      <div class="row">  
+      <div class="row ">  
         {% for CodeContent in CodeContent %}
           <br>
-          <div class="col-sm-6">
+          <div class=" cards col-sm-4 ">
           
-            <div class="card">
+            <div class="card text-white bg-dark mb-3 p-6 shadow-lg">
               <div class="card-header">
                 {{CodeContent.title}}
               </div>
@@ -65,9 +68,11 @@
                 <h6>{{CodeContent.tags}}</h6>
                 <p class="card-text">{{CodeContent.code_content}}</p>
                 <div class="card-footer">
-                  Written By{{CodeContent.user}}
+                  <h5>Written By {{CodeContent.user}}</h5>
                 </div>
               </div>
+              <figcaption><a class="btn btn-outline-danger" href="/code/{{ code.id }}" type="button">Read
+                More</a></figcaption>
             </div>
   
           </div>
@@ -78,7 +83,49 @@
         <h4>NO CODE AVAILABLE</h4>
     {% endif %}
   </div>
-
-
-
-  {% endblock %}
+  
+      
+        <h2><strong>What's new?</strong></h2>
+      
+        <div class="news">
+      
+          <figure class="article">
+      
+            <img src="https://source.unsplash.com/random/520x300/?web_development,hacking" />
+      
+            <figcaption>
+      
+              <h3>New Item</h3>
+      
+              <p>
+      
+                In today’s update, two heads are better than one, and three heads are better than that, as the all-new Flockheart’s Gamble Arcana item for Ogre Magi makes its grand debut.
+      
+              </p>
+      
+            </figcaption>
+      
+          </figure>
+      
+          <figure class="article">
+      
+            <img src="https://source.unsplash.com/random/520x300/?web_development,hacking" />
+      
+            <figcaption>
+      
+              <h3>Update</h3>
+      
+              <p>
+    
+                Just in time for Lunar New Year and the Rat’s time in the cyclical place of honor,
+                 the Treasure of Unbound Majesty is now available.
+              </p>
+      
+            </figcaption>
+      
+          </figure>
+      
+        </div>
+      </div>
+  
+   {% endblock %}
