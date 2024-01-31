@@ -10,5 +10,10 @@ urlpatterns = [
     path('update_codeSnippet/<id>/',views.update_codeSnippet,name="update_codeSnippet"),
     path('login/',views.login_page,name="login_page"),
     path('logout/',views.logout_page,name="logout_page"),
+    path('myProfile/',views.myProfile,name="myProfile"),
     path('register/',views.register_page,name="register_page"),
+    path('aboutUs/',views.aboutUs,name="aboutUs"),
+    path('terms/',views.terms,name="terms"),
+    path('contactUs/',views.contactUs,name="contactUs"),
+
 ]

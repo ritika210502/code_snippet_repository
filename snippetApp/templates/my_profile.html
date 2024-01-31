@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title%}Add Code Snippet{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+<form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h2>Add Code here</h2>
+    <div class="mb-3">
+      <label for="inputTitle" class="form-label">Title</label>
+      <input type="text" name="title" class="form-control">
+    </div>
+    <div class="mb-3">
+      <label for="inputAddress2" class="form-label">Code Content</label>
+      <textarea class="form-control" name="code_content" rows="5" required></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="inputLanguage" class="form-label">Language</label>
+        <input type="text" name="language" class="form-control">
+
+    <div class="mb-3">
+        <label for="inputTags" class="form-label">Tags</label>
+        <input type="text" name="tags" class="form-control">
+    </div>
+    
+    <div class="col-12">
+      <button type="submit" class="btn btn-primary">Add Code</button>
+    </div>
+  </form>
+</div>
+<div class="mt-5">
+  {% if CodeContent %}
+    <div class="row">  
+      {% for CodeContent in CodeContent %}
+        <br>
+        <div class="col-sm-6">
+        
+          <div class="card">
+            <div class="card-header">
+              {{CodeContent.title}}
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">{{CodeContent.language}}</h5>
+              <h6>{{CodeContent.tags}}</h6>
+              <p class="card-text">{{CodeContent.code_content}}</p>
+              <h4 class="card-footer">
+                <a class="btn btn-danger" href="/delete_codeSnippet/{{CodeContent.id}}">DELETE</a>
+                <a class="btn btn-success" href="/update_codeSnippet/{{CodeContent.id}}">UPDATE</a>
+              <h4>
+            </div>
+          </div>
+
+        </div>
+        <br>
+      {% endfor %}
+    </div>
+  {% else %}
+      <h4>NO CODE AVAILABLE</h4>
+  {% endif %}
+</div>
+{% endblock %}

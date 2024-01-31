@@ -8,6 +8,18 @@ from django.urls import reverse
 
 
 # Create your views here.
+def aboutUs(request):
+    return render(request,"about_us.html")
+
+def terms(request):
+    return render(request,"terms.html")
+
+def contactUs(request):
+    return render(request,"contact_us.html")
+
+def myProfile(request):
+    return render(request,"my_profile.html")
+
 def register_page(request):
     if request.method=="POST":
         firstname=request.POST.get('firstname')
