@@ -47,7 +47,7 @@
 
 <div class="mt-5 mx-auto">
     <form class="d-flex">
-        <input class="form-control me-2" type="search" placeholder="Search your code here by using language, title, tags or content" aria-label="Search" style="height: 70px;">
+        <input name="search" class="form-control me-2" type="search" placeholder="Search your code here by using language, title, tags or content" aria-label="Search" style="height: 70px;">
         <button class="btn btn-outline-success" type="submit">Search</button>
     </form>
 </div>
@@ -71,7 +71,7 @@
                   <h5>Written By {{CodeContent.user}}</h5>
                 </div>
               </div>
-              <figcaption><a class="btn btn-outline-danger" href="/code/{{ code.id }}" type="button">Read
+              <figcaption><a class="btn btn-outline-danger" href="/readFull/{{ CodeContent.id }}" type="button">Read
                 More</a></figcaption>
             </div>
   

@@ -22,9 +22,9 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('add_codeSnippet/',include('snippetApp.urls')),
-    path('delete_codeSnippet/<id>/',include('snippetApp.urls')),
-    path('update_codeSnippet/<id>/',include('snippetApp.urls')),
+    # path('add_codeSnippet/',include('snippetApp.urls')),
+    # path('delete_codeSnippet/<id>/',include('snippetApp.urls')),
+    # path('update_codeSnippet/<id>/',include('snippetApp.urls')),
     path('',include('snippetApp.urls')),
     # path('login/',include('snippetApp.urls')),
     # path('logout/',include('snippetApp.urls')),

@@ -5,6 +5,7 @@ from django.contrib.auth import authenticate, login,logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.db.models import Q
 
 
 # Create your views here.
@@ -18,7 +19,20 @@ def contactUs(request):
     return render(request,"contact_us.html")
 
 def myProfile(request):
-    return render(request,"my_profile.html")
+    if request.method == "POST":
+        title = request.POST.get('title')
+        code_content = request.POST.get('code_content')
+        language = request.POST.get('language')
+        tags = request.POST.get('tags')
+        user=request.user
+        Code.objects.create(title=title, code_content=code_content, language=language, tags=tags, user=request.user)
+        return redirect('/add_codeSnippet/')
+    
+    user=request.user
+
+    queryset = Code.objects.filter(user=user)
+    context = {'CodeContent': queryset}
+    return render(request,"my_profile.html",context)
 
 def register_page(request):
     if request.method=="POST":
@@ -71,21 +85,6 @@ def logout_page(request):
     return redirect('/login/')
 
 
-@login_required(login_url="/login/")
-def add_codeSnippet(request):
-    if request.method == "POST":
-        title = request.POST.get('title')
-        code_content = request.POST.get('code_content')
-        language = request.POST.get('language')
-        tags = request.POST.get('tags')
-
-        Code.objects.create(title=title, code_content=code_content, language=language, tags=tags, user=request.user)
-        return redirect('/add_codeSnippet/')
-
-    queryset = Code.objects.all()
-    context = {'CodeContent': queryset}
-    return render(request, "index.html", context)
-
 
 @login_required(login_url="/login/")
 def delete_codeSnippet(request, id):
@@ -112,4 +111,37 @@ def update_codeSnippet(request,id):
         return redirect('/add_codeSnippet/')
     
     context={'CodeContent':queryset }
-    return render(request,"updateRecipe.html",context)
+    return render(request,"updateCode.html",context)
+
+@login_required(login_url="/login/")
+def add_codeSnippet(request):
+    if request.method == "POST":
+        title = request.POST.get('title')
+        code_content = request.POST.get('code_content')
+        language = request.POST.get('language')
+        tags = request.POST.get('tags')
+        user=request.user
+        Code.objects.create(title=title, code_content=code_content, language=language, tags=tags, user=request.user)
+        return redirect('/add_codeSnippet/')
+
+    queryset = Code.objects.all()
+
+    if request.GET.get('search'):
+        queryset=queryset.filter(
+        Q(title__icontains=request.GET.get('search'))|
+        Q(code_content__icontains=request.GET.get('search'))|
+        Q(language__icontains=request.GET.get('search'))|
+        Q(tags__icontains=request.GET.get('search'))|
+        Q(user__username__icontains=request.GET.get('search'))
+        )
+
+    context = {'CodeContent': queryset}
+    return render(request, "index.html", context)
+
+
+
+@login_required(login_url="/login/")
+def readFull(request,id):
+    obj=Code.objects.get(id=id)
+    context={'CodeContent':obj}
+    return render(request,"readFull.html",context)
